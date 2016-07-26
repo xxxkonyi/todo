@@ -4,8 +4,9 @@ buildscript {
         maven { url "http://repo.spring.io/milestone" }
     }
     dependencies {
-        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.3.6.RELEASE')
-        classpath('org.springframework:springloaded:1.2.6.RELEASE')
+        classpath 'io.ratpack:ratpack-gradle:1.4.0-rc-2'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.6.RELEASE'
+        classpath 'org.springframework:springloaded:1.2.6.RELEASE'
     }
 }
 
@@ -15,11 +16,12 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'idea'
+apply plugin: 'io.ratpack.ratpack-java'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-//mainClassName = 'org.uoiu.todo.Application'
+mainClassName = 'org.uoiu.todo.Application'
 
 jar {
     baseName = 'todo-app'
@@ -32,7 +34,6 @@ repositories {
 }
 
 dependencies {
-    compile('joda-time:joda-time:2.2')
-    compile("org.springframework.boot:spring-boot-starter-web")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile ratpack.dependency("spring-boot")
+//    compile "org.springframework.boot:spring-boot-starter"
 }
