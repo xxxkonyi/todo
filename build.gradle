@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    compile ratpack.dependency("spring-boot")
-    runtime 'org.slf4j:slf4j-simple:1.7.12'
+//    compile ratpack.dependency("spring-boot")
+    compile 'org.slf4j:slf4j-simple:1.7.12'
 //    compile "org.springframework.boot:spring-boot-starter"
 }

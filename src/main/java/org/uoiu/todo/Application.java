@@ -1,16 +1,18 @@
 package org.uoiu.todo;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.env.StandardEnvironment;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.core.env.StandardEnvironment;
+
+import ratpack.handling.RequestLogger;
 import ratpack.server.RatpackServer;
 
-@SpringBootApplication
+//@SpringBootApplication
 //@RestController
 public class Application {
 
-  @Autowired
-  StandardEnvironment environment;
+//  @Autowired
+//  StandardEnvironment environment;
 
 //  @RequestMapping("/")
 //  public String index(HttpServletResponse response) {
@@ -27,10 +29,12 @@ public class Application {
   public static void main(String[] args) throws Exception {
 //    SpringApplication.run(Application.class, args);
 
-    RatpackServer.start(serverSpec -> serverSpec
+    RatpackServer.start(server -> server
 //      .registry(Spring.spring(Application.class))
         .handlers(chain -> chain
-          .get(ctx -> ctx.getResponse().send("Hello, World!"))
+          .all(RequestLogger.ncsa())
+          .get(ctx -> ctx.render("Hello World!"))
+          .get(":name", ctx -> ctx.render("Hello " + ctx.getPathTokens().get("name") + "!"))
         )
     );
   }
