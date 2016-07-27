@@ -4,8 +4,15 @@ package org.uoiu.todo;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import org.springframework.core.env.StandardEnvironment;
 
+import ratpack.error.ServerErrorHandler;
+import ratpack.exec.Blocking;
+import ratpack.exec.Promise;
 import ratpack.handling.RequestLogger;
+import ratpack.rx.RxRatpack;
 import ratpack.server.RatpackServer;
+import rx.Observable;
+
+import static ratpack.rx.RxRatpack.observe;
 
 //@SpringBootApplication
 //@RestController
@@ -28,12 +35,23 @@ public class Application {
 
   public static void main(String[] args) throws Exception {
 //    SpringApplication.run(Application.class, args);
+    RxRatpack.initialize(); // must be called once for the life of the JVM
 
     RatpackServer.start(server -> server
 //      .registry(Spring.spring(Application.class))
         .handlers(chain -> chain
           .all(RequestLogger.ncsa())
-          .get(ctx -> ctx.render("Hello World!"))
+          .register(registry ->
+            registry.add(ServerErrorHandler.class, (context, throwable) ->
+              context.render("caught by error handler: " + throwable.getMessage())
+            )
+          )
+          .get(ctx -> {
+            Promise<String> promise = Blocking.get(() -> "hello world");
+            observe(promise).map(String::toUpperCase).subscribe(ctx::render);
+          })
+          .get("error", ctx -> Observable.<String>error(new Exception("!")).subscribe((s) -> {
+          }))
           .get(":name", ctx -> ctx.render("Hello " + ctx.getPathTokens().get("name") + "!"))
         )
     );

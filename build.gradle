@@ -5,8 +5,8 @@ buildscript {
     }
     dependencies {
         classpath 'io.ratpack:ratpack-gradle:1.4.0-rc-2'
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.6.RELEASE'
-        classpath 'org.springframework:springloaded:1.2.6.RELEASE'
+//        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.6.RELEASE'
+//        classpath 'org.springframework:springloaded:1.2.6.RELEASE'
     }
 }
 
@@ -14,7 +14,7 @@ group 'org.uoiu.todo'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'spring-boot'
+//apply plugin: 'spring-boot'
 apply plugin: 'idea'
 apply plugin: 'io.ratpack.ratpack-java'
 
@@ -36,5 +36,7 @@ repositories {
 dependencies {
 //    compile ratpack.dependency("spring-boot")
     compile 'org.slf4j:slf4j-simple:1.7.12'
+    compile 'io.ratpack:ratpack-rx:1.4.0-rc-2'
+//    compile 'io.reactivex:rxjava:1.1.8'
 //    compile "org.springframework.boot:spring-boot-starter"
 }
